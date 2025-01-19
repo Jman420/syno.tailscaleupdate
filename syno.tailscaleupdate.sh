@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+# shellcheck disable=SC2154,SC2181
+# shellcheck source=/dev/null
 
 # Script meant to workaround a couple of Tailscale Update issues on Synology DSM devices :
 #   - Outdated packages in Synology Package Center : https://tailscale.com/kb/1131/synology#schedule-automatic-updates
