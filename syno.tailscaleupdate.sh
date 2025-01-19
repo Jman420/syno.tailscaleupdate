@@ -213,11 +213,15 @@ if [[ "$SpusNewVer" != "null" ]]; then
 fi
 printf "\n"
 
-# Check Tailscale CLI for Update
-versionJson=$(tailscale version --upstream --json)
-installedVer=$(echo "$versionJson" | grep 'short":' | cut -d\" -f4)
-upstreamVer=$(echo "$versionJson" | grep 'upstream":' | cut -d\" -f4)
-if [ "$installedVer" -ne "$upstreamVer" ]; then
+# Check Tailscale CLI for available versions
+VersionJson=$(tailscale version --upstream --json)
+InstalledVer=$(echo "$VersionJson" | grep 'short":' | cut -d\" -f4)
+UpstreamVer=$(echo "$VersionJson" | grep 'upstream":' | cut -d\" -f4)
+printf '%16s\n'    "Tailscale Client"
+printf '%16s %s\n' "Running Ver:" "$InstalledVer"
+printf '%16s %s\n' "Upstream Ver:" "$UpstreamVer"
+
+if [ "$InstalledVer" -ne "$UpstreamVer" ]; then
   # Store current Tailscale Daemon capabilities
   printf '%s\n' "Retrieving Tailscale Daemon capabilities..."
   PreUpdateCapabilities=$(getcap /var/packages/Tailscale/target/bin/tailscaled)
@@ -227,7 +231,7 @@ if [ "$installedVer" -ne "$upstreamVer" ]; then
   printf '%s\n' "Updating Tailscale via CLI..."
   tailscale update --yes
   if [ "$?" -eq "0" ]; then UpdatePerformed="true"; else UpdatePerformed="false"; fi
-  printf '%s\n' "  Update performed : $UpdatePerformed"
+  printf '%s\n' "  Update successful : $UpdatePerformed"
 
   # Restore Tailscale Daemon capabilities if needed
   PostUpdateCapabilities=$(getcap /var/packages/Tailscale/target/bin/tailscaled)
@@ -242,7 +246,7 @@ if [ "$installedVer" -ne "$upstreamVer" ]; then
     ExitStatus=1
   fi
 else
-  printf '%s\n' "No new Tailscale updates found."
+  printf '%17s%s\n' '' "* No new version found."
 fi
 printf "\n"
 
