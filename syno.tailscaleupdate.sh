@@ -19,7 +19,7 @@ exec > >(tee "$SrceFllPth.log") 2>"$SrceFllPth.debug"
 set -x
 
 # SCRIPT VERSION
-SpuscrpVer=1.0.1
+SpuscrpVer=1.0.2
 
 # PRINT OUR GLORIOUS HEADER BECAUSE WE ARE FULL OF OURSELVES
 printf "\n"
@@ -206,6 +206,8 @@ if [[ "$SpusNewVer" != "null" ]]; then
       fi
       # DELETE TEMP COMPARISON FILE
       find "$SrceFolder/Archive/Scripts" -type f -name "$SrceFileNm.cmp" -delete
+	else
+	  printf '%17s%s\n' '' "! Script SelfUpdate is disabled!"
     fi
   else
     printf '%17s%s\n' '' "* No new version found."
