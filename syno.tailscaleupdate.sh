@@ -19,7 +19,7 @@ exec > >(tee "$SrceFllPth.log") 2>"$SrceFllPth.debug"
 set -x
 
 # SCRIPT VERSION
-SpuscrpVer=1.0.0
+SpuscrpVer=1.0.1
 
 # PRINT OUR GLORIOUS HEADER BECAUSE WE ARE FULL OF OURSELVES
 printf "\n"
@@ -221,7 +221,7 @@ printf '%16s\n'    "Tailscale Client"
 printf '%16s %s\n' "Running Ver:" "$InstalledVer"
 printf '%16s %s\n' "Upstream Ver:" "$UpstreamVer"
 
-if [ "$InstalledVer" -ne "$UpstreamVer" ]; then
+if [ "$InstalledVer" != "$UpstreamVer" ]; then
   # Store current Tailscale Daemon capabilities
   printf '%s\n' "Retrieving Tailscale Daemon capabilities..."
   PreUpdateCapabilities=$(getcap /var/packages/Tailscale/target/bin/tailscaled)
