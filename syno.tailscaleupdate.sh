@@ -19,7 +19,7 @@ exec > >(tee "$SrceFllPth.log") 2>"$SrceFllPth.debug"
 set -x
 
 # SCRIPT VERSION
-SpuscrpVer=1.0.2
+SpuscrpVer=1.0.3
 
 # PRINT OUR GLORIOUS HEADER BECAUSE WE ARE FULL OF OURSELVES
 printf "\n"
@@ -56,6 +56,7 @@ fi
 add_config_with_comment "NetTimeout"      "900" "# NETWORK TIMEOUT IN SECONDS (900s = 15m)"
 add_config_with_comment "FixCapabilities" "1"   "# SCRIPT WILL ENSURE OUTBOUND CONNECTION CAPABILITIES ARE RETAINED IF SET TO 1"
 add_config_with_comment "SelfUpdate"      "0"   "# SCRIPT WILL SELF-UPDATE IF SET TO 1"
+add_config_with_comment "MinimumAge"      "7"   "# A NEW SCRIPT UPDATE MUST BE THIS MANY DAYS OLD"
 
 # LOAD CONFIG FILE IF IT EXISTS
 if [ -f "$SrceFolder/config.ini" ]; then
