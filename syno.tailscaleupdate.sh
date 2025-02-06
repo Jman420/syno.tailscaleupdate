@@ -19,7 +19,7 @@ exec > >(tee "$SrceFllPth.log") 2>"$SrceFllPth.debug"
 set -x
 
 # SCRIPT VERSION
-SpuscrpVer=1.0.3
+SpuscrpVer=1.0.4
 
 # PRINT OUR GLORIOUS HEADER BECAUSE WE ARE FULL OF OURSELVES
 printf "\n"
@@ -29,7 +29,7 @@ printf "\n"
 # CHECK IF ROOT
 if [ "$EUID" -ne "0" ]; then
   printf ' %s\n' "* This script MUST be run as root - exiting.."
-  /usr/syno/bin/synonotify PKGHasUpgrade '{"%PKG_HAS_UPDATE%": "$PackageName\n\nSyno.$PackageName Update task failed. Script was not run as root."}'
+  /usr/syno/bin/synonotify PKGHasUpgrade "{'%PKG_HAS_UPDATE%': '$PackageName\n\nSyno.$PackageName - Update task failed. Script was not run as root.'}"
   printf "\n"
   exit 1
 fi
@@ -181,7 +181,7 @@ if [[ "$SpusNewVer" != "null" ]]; then
           cmp -s   "$SrceFolder/Archive/Scripts/$SrceFileNm.cmp" "$SrceFolder/$SrceFileNm"
           if [ "$?" -eq "0" ]; then
             printf '%17s%s\n' '' "* Script update succeeded!"
-            /usr/syno/bin/synonotify PKGHasUpgrade '{"%PKG_HAS_UPDATE%": "$PackageName\n\nSyno.$PackageName Update\n\nSelf-Update completed successfully"}'
+            /usr/syno/bin/synonotify PKGHasUpgrade "{'%PKG_HAS_UPDATE%': '$PackageName\n\nSyno.$PackageName - Update\n\nSelf-Update completed successfully'}"
             ExitStatus=1
             if [ -n "$SpusRelDes" ]; then
               # SHOW RELEASE NOTES
@@ -194,12 +194,12 @@ if [[ "$SpusNewVer" != "null" ]]; then
             fi
           else
             printf '%17s%s\n' '' "* Script update failed to overwrite."
-            /usr/syno/bin/synonotify PKGHasUpgrade '{"%PKG_HAS_UPDATE%": "$PackageName\n\nSyno.$PackageName Update\n\nSelf-Update failed."}'
+            /usr/syno/bin/synonotify PKGHasUpgrade "{'%PKG_HAS_UPDATE%': '$PackageName\n\nSyno.$PackageName - Update\n\nSelf-Update failed.'}"
             ExitStatus=1
           fi
         else
           printf '%17s%s\n' '' "* Script update failed to download."
-          /usr/syno/bin/synonotify PKGHasUpgrade '{"%PKG_HAS_UPDATE%": "$PackageName\n\nSyno.$PackageName Update\n\nSelf-Update failed to download."}'
+          /usr/syno/bin/synonotify PKGHasUpgrade "{'%PKG_HAS_UPDATE%': '$PackageName\n\nSyno.$PackageName - Update\n\nSelf-Update failed to download.'}"
           ExitStatus=1
         fi
       else
@@ -245,7 +245,7 @@ if [ "$InstalledVer" != "$UpstreamVer" ]; then
       synosystemctl restart pkgctl-Tailscale.service
     fi
   
-    /usr/syno/bin/synonotify PKGHasUpgrade '{"%PKG_HAS_UPDATE%": "$PackageName\n\nSyno.$PackageName Update task completed successfully"}'
+    /usr/syno/bin/synonotify PKGHasUpgrade "{'%PKG_HAS_UPDATE%': '$PackageName\n\nSyno.$PackageName Update task completed successfully'}"
     ExitStatus=1
   fi
 else
